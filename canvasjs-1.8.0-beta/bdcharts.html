@@ -1,0 +1,439 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+body{
+  background:white url() no-repeat left top;
+}
+</style>
+<script type="text/javascript">
+var dataPoints = [];
+var charts;
+function drawDoughnut(data){
+//add doughnut data
+var chart = new CanvasJS.Chart("chartContainer",
+	{
+		animationEnabled: true,
+		title:{
+			text: "All Platform OS Market Share, Q3 2015",
+			fontFamily: "Impact",
+                        fontWeight: "normal",
+                        fontColor:"red"
+		},
+
+		legend:{
+			verticalAlign: "bottom",
+			horizontalAlign: "center"
+		},
+		data: [
+		{
+			//startAngle: 45,
+			indexLabelFontSize: 20,
+			indexLabelFontFamily: "Garamond",
+			indexLabelFontColor: "darkgrey",
+			indexLabelLineColor: "darkgrey",
+			indexLabelPlacement: "outside",
+			type: "doughnut",
+			showInLegend: true,
+			dataPoints: [
+                                {  y: 53.37, legendText:"Qt 53%", indexLabel: "Desktop App 53%",color:"#73b92b" },
+                                {  y: 35.0, legendText:"Java 35%", indexLabel: "Android 35%",color:"yellow" },
+                                {  y: 7, legendText:"iOS 7%", indexLabel: "Apple iOS 7%",color:"gray" },
+                                {  y: 2, legendText:"C# 2%", indexLabel: "Windows Phone 2%" ,color:"red"},
+                                {  y: 5, legendText:"QML 5%", indexLabel: "QML 5%",color:"#02acbc" }
+			]
+		}
+		]
+	});
+
+	chart.render();
+}
+function drawColumn(){
+	var chart = new CanvasJS.Chart("chartContainer",
+	{
+		animationEnabled: true,
+		title:{
+                        text: "Simple Column Chart",
+                        fontColor:"gray"
+		},
+		data: [
+		{
+			type: "column", //change type to bar, line, area, pie, etc
+			dataPoints: [
+                                { x: 10, y: 71,color:"red" },
+				{ x: 20, y: 55 },
+				{ x: 30, y: 50 },
+				{ x: 40, y: 65 },
+				{ x: 50, y: 95 },
+				{ x: 60, y: 68 },
+				{ x: 70, y: 28 },
+				{ x: 80, y: 34 },
+				{ x: 90, y: 14 }
+			]
+		}
+		]
+	});
+
+	chart.render();
+}
+
+function drawTrendLine(data){
+var limit = 1000;    //increase number of dataPoints by increasing this
+
+	var y = 0;
+	var data = []; var dataSeries = { type: "line" };
+	var dataPoints = [];
+	for (var i = 0; i < limit; i += 1) {
+ 		y += (Math.random() * 10 - 5);
+ 		dataPoints.push({
+ 			x: i - limit / 2,
+ 			y: y                
+ 		});
+ 	}
+ 	dataSeries.dataPoints = dataPoints;
+ 	data.push(dataSeries); 
+var chart = new CanvasJS.Chart("chartContainer",
+	{
+	    animationEnabled: true,
+		zoomEnabled: true,
+		panEnabled: true, 
+		title:{
+			text: "Try Zooming and Panning" 
+		},
+		legend: {
+			horizontalAlign: "right",
+			verticalAlign: "center"        
+		},
+		axisY:{
+			includeZero: false
+		},
+		data: data,  // random generator below
+    });
+	chart.render();	   	
+}
+
+function drawBubble(data){
+	var chart = new CanvasJS.Chart("chartContainer",
+	{
+		animationEnabled: true,
+		title:{
+			text: "Multi Series Bubble Charts"
+		},
+		data: [
+		{
+			type: "bubble",        
+			//markerType: "square",
+			showInLegend: true,        
+			dataPoints: [
+				{ x: 10, y: 71, z:12 },
+				{ x: 20, y: 55, z:23 },
+				{ x: 30, y: 50, z:6  },
+				{ x: 40, y: 65, z:2  },
+				{ x: 50, y: 95, z:50 },
+				{ x: 60, y: 68, z:13 },
+				{ x: 70, y: 28, z:21 },
+				{ x: 80, y: 34, z:5  },
+				{ x: 90, y: 14, z:7  }
+			]
+			},
+			{
+				type: "bubble",        
+				markerType: "triangle",
+				showInLegend: true,
+				dataPoints: [
+				{ x: 10, y: 41, z:12 },
+				{ x: 20, y: 25, z:23 },
+				{ x: 30, y: 80, z:6  },
+				{ x: 40, y: 35, z:2  },
+				{ x: 50, y: 65, z:50 },
+				{ x: 60, y: 38, z:13 },
+				{ x: 70, y: 48, z:21 },
+				{ x: 80, y: 14, z:5  },
+				{ x: 90, y: 44, z:7  }
+			]
+			}
+		],
+		legend: {
+			cursor: "pointer",
+			itemclick: function (e) {
+				if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+					e.dataSeries.visible = false;
+				} else {
+					e.dataSeries.visible = true;
+				}
+			chart.render();
+			}
+		}
+	});
+	chart.render();
+}
+
+function drawCharts(type,data){
+  switch(type){
+   case "bubble":{
+   drawBubble(data);
+   }break;
+   case "line":{
+   drawTrendLine(data);
+   }break;
+   case "column":{
+   drawColumn(data);
+   }break;
+   case "doughnut":{
+   drawDoughnut(data);
+   }break;
+   case "spline":{
+   drawSpline(data);
+   }break;
+   case "dyline":{
+   drawDyData(data,false);
+   }break;
+   case "candlestick":{
+   drawCandlestick(data);
+   }break;
+  }
+}
+
+function drawSpline(data){
+	var chart = new CanvasJS.Chart("chartContainer",
+	{
+		animationEnabled: true,
+		title:{
+			text: "Multi Series Spline Chart - Hide / Unhide via Legend"
+		},
+		data: [
+		{
+			type: "spline", //change type to bar, line, area, pie, etc
+			showInLegend: true,        
+			dataPoints: [
+				{ x: 10, y: 51 },
+				{ x: 20, y: 45},
+				{ x: 30, y: 50 },
+				{ x: 40, y: 62 },
+				{ x: 50, y: 95 },
+				{ x: 60, y: 66 },
+				{ x: 70, y: 24 },
+				{ x: 80, y: 32 },
+				{ x: 90, y: 16}
+			]
+			},
+			{
+			type: "spline",
+			showInLegend: true,        
+			dataPoints: [
+				{ x: 10, y: 21 },
+				{ x: 20, y: 44},
+				{ x: 30, y: 35 },
+				{ x: 40, y: 45 },
+				{ x: 50, y: 75 },
+				{ x: 60, y: 58 },
+				{ x: 70, y: 18 },
+				{ x: 80, y: 30 },
+				{ x: 90, y: 11}
+			]
+			}
+		],
+		legend: {
+			cursor: "pointer",
+			itemclick: function (e) {
+				if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+					e.dataSeries.visible = false;
+				} else {
+					e.dataSeries.visible = true;
+			}
+			chart.render();
+			}
+		}
+	});
+
+	chart.render();
+}
+
+function drawDyData(data,isAdd){
+if(!isAdd){
+    charts = new CanvasJS.Chart("chartContainer", { 
+		animationEnabled: true,
+		title: {
+			text: "Adding New DataPoints Dynamically"
+		},
+		data: [
+		{
+			type: "spline",
+			dataPoints: [
+				{ y: 10 },
+				{ y:  4 },
+				{ y: 18 },
+				{ y:  8 }	
+			]
+		}
+		]
+	});
+	charts.render();	
+
+	}else{
+	var length = charts.options.data[0].dataPoints.length;	
+	charts.options.data[0].dataPoints.push({ y: 25 - Math.random() * 10});
+	charts.render();
+    }	
+}
+
+function drawCandlestick(data){
+var chart = new CanvasJS.Chart("chartContainer",
+{
+    animationEnabled: true,
+	title:{
+		text: "Stock Prices Ericsson V/S Dell for june 2015",
+	},
+	exportEnabled: true,
+	axisY: {
+		includeZero:false,
+		prefix: "$",
+		title: "Prices",
+	},     
+	axisX: {
+		interval:1,
+		valueFormatString: "MMM-DD",
+	},
+	toolTip: {
+		shared: true,
+	},
+	data: [
+	{
+		type: "candlestick",
+		showInLegend: true,
+		name: "Ericsson Stock Price",
+		dataPoints: [   // Y: [Open, High ,Low, Close]
+			{x:  new Date(2013,06,31), y:[11.79,  11.83,  11.68,  11.73]},
+			{x:  new Date(2013,06,30), y:[11.90,  11.91,  11.77,  11.84]},	
+			{x:  new Date(2013,06,29), y:[11.87,  11.89,  11.77,  11.78]},	
+			{x:  new Date(2013,06,26), y:[11.85,  11.87,  11.79,  11.81]},	
+			{x:  new Date(2013,06,25), y:[11.65,  11.84,  11.63,  11.82]},	
+			{x:  new Date(2013,06,24), y:[11.72,  11.75,  11.60,  11.68]},	
+			{x:  new Date(2013,06,23), y:[11.59,  11.70,  11.58,  11.66]},	
+			{x:  new Date(2013,06,22), y:[11.51,  11.65,  11.50,  11.63]},	
+			{x:  new Date(2013,06,19), y:[11.48,  11.67,  11.47,  11.57]},	
+			{x:  new Date(2013,06,18), y:[11.68,  11.71,  11.38,  11.60]},	
+			{x:  new Date(2013,06,17), y:[12.24,  12.25,  12.06,  12.18]},	
+			{x:  new Date(2013,06,16), y:[12.29,  12.32,  12.20,  12.26]},	
+			{x:  new Date(2013,06,15), y:[12.16,  12.26,  12.09,  12.25]},	
+			{x:  new Date(2013,06,12), y:[12.03,  12.12,  11.99,  12.07]},	
+			{x:  new Date(2013,06,11), y:[11.92,  11.98,  11.85,  11.98]},	
+			{x:  new Date(2013,06,10), y:[11.66,  11.73,  11.61,  11.71]},	
+			{x:  new Date(2013,06,09), y:[11.54,  11.57,  11.44,  11.5]},	
+			{x:  new Date(2013,06,08), y:[11.53,  11.56,  11.45,  11.4]},	
+			{x:  new Date(2013,06,05), y:[11.40,  11.46,  11.26,  11.3]},
+			{x:  new Date(2013,06,03), y:[11.31,  11.50,  11.30,  11.4]},	
+			{x:  new Date(2013,06,02), y:[11.31,  11.44,  11.28,  11.3]},	
+			{x:  new Date(2013,06,01), y:[11.43,  11.47,  11.31,  11.3]}	
+		]
+	},
+	{
+		type: "candlestick",
+		showInLegend: true,
+		name: "Dell Stock Price",
+		dataPoints: [   // Y: [Open, High ,Low, Close]
+			{x:  new Date(2013,06,31),  y:[ 12.66,  12.98,  12.28,  12.66]},	
+			{x:  new Date(2013,06,30),  y:[ 12.89,  12.92,  12.82,  12.86]},	
+			{x:  new Date(2013,06,29),  y:[ 12.90,  12.95,  12.71,  12.87]},	
+			{x:  new Date(2013,06,26),  y:[ 12.95,  12.97,  12.90,  12.94]},	
+			{x:  new Date(2013,06,25),  y:[ 12.85,  12.99,  12.84,  12.98]},	
+			{x:  new Date(2013,06,24),  y:[ 12.83,  13.25,  12.66,  12.92]},	
+			{x:  new Date(2013,06,23),  y:[ 13.04,  13.05,  12.85,  12.88]},	
+			{x:  new Date(2013,06,22),  y:[ 12.97,  13.12,  12.95,  13.02]},	
+			{x:  new Date(2013,06,19),  y:[ 13.16,  13.17,  12.98,  13.14]},	
+			{x:  new Date(2013,06,18),  y:[ 13.12,  13.22,  13.07,  13.12]},	
+			{x:  new Date(2013,06,17),  y:[ 12.80,  12.99,  12.75,  12.88]},	
+			{x:  new Date(2013,06,16),  y:[ 13.19,  13.19,  12.92,  13.02]},	
+			{x:  new Date(2013,06,15),  y:[ 13.29,  13.30,  13.14,  13.15]},	
+			{x:  new Date(2013,06,12),  y:[ 13.37,  13.39,  13.28,  13.32]},	
+			{x:  new Date(2013,06,11),  y:[ 13.36,  13.46,  13.34,  13.34]},	
+			{x:  new Date(2013,06,10),  y:[ 13.40,  13.40,  13.33,  13.33]},	
+			{x:  new Date(2013,06,09),  y:[ 13.43,  13.48,  13.36,  13.36]},	
+			{x:  new Date(2013,06,08),  y:[ 13.36,  13.44,  13.28,  13.44]},	
+			{x:  new Date(2013,06,05),  y:[ 13.25,  13.25,  12.70,  13.03]},	
+			{x:  new Date(2013,06,03),  y:[ 13.31,  13.37,  13.29,  13.31]},	
+			{x:  new Date(2013,06,02),  y:[ 13.32,  13.39,  13.31,  13.38]},
+			{x:  new Date(2013,06,01),  y:[ 13.37,  13.39,  13.30,  13.31]}		
+		]
+	}
+	]
+});
+chart.render();
+}
+
+function jsCall(message){
+
+}
+function nativecall(){
+       //alert("will try native call");
+       drawDyData([],true);
+	   jsCall("fuck");
+}
+/*
+navigator.qt.onmessage = function(ev) {
+   navigator.qt.postMessage(ev.data);
+   var data2 =[];
+   var obj = ev.data.split("|");
+   var type = obj[0];
+   drawCharts(type,[]);
+}*/
+window.onload = function () {
+    var data=[];
+    drawCharts("doughnut",data);
+}
+function connectWebViewJavascriptBridge(callback) {
+        if (window.WebViewJavascriptBridge) {
+                callback(WebViewJavascriptBridge)
+        } else {
+                document.addEventListener('WebViewJavascriptBridgeReady', function() {
+                        callback(WebViewJavascriptBridge)
+                }, false)
+        }
+}
+connectWebViewJavascriptBridge(function(bridge) {
+        var uniqueId = 1
+        bridge.init(function(message, responseCallback) {
+                drawCharts(message,[]);
+                var data = { 'Javascript Responds':'Wee!' }
+                log('JS responding with', data)
+                responseCallback(data)
+        })
+
+        bridge.registerHandler('testJavascriptHandler', function(data, responseCallback) {
+                log('ObjC called testJavascriptHandler with', data)
+                var responseData = { 'Javascript Says':'Right back atcha!' }
+                log('JS responding with', responseData)
+                responseCallback(responseData)
+        })
+
+/*        var button = document.getElementById('buttons').appendChild(document.createElement('button'))
+        button.innerHTML = 'Send message to ObjC'
+        button.onclick = function(e) {
+                e.preventDefault()
+                var data = 'Hello from JS button'
+                log('JS sending message', data)
+                bridge.send(data, function(responseData) {
+                        log('JS got response', responseData)
+                })
+        }
+
+        document.body.appendChild(document.createElement('br'))
+
+        var callbackButton = document.getElementById('buttons').appendChild(document.createElement('button'))
+        callbackButton.innerHTML = 'Fire testObjcCallback'
+        callbackButton.onclick = function(e) {
+                e.preventDefault()
+                log('JS calling handler "testObjcCallback"')
+                bridge.callHandler('testObjcCallback', {'foo': 'bar'}, function(response) {
+                        log('JS got response', response)
+                })
+        }*/
+})
+</script>
+<script type="text/javascript" src="./canvasjs.min.js"></script>
+</head>
+<body>
+<h1 style="text-align:center">WebViewJavascriptBridge Demo</h1>
+<div id="chartContainer" style="height: 100%; width: 100%;"></div>
+</body>
+</html>
