@@ -2,8 +2,8 @@
 #include <QGuiApplication>
 #include <QtGui/qpa/qplatformnativeinterface.h>
 #include <UIKit/UIKit.h>
-#include "WebViewJavascriptBridge/WebViewJavascriptBridge/WebViewJavascriptBridge.h"
-#include "WebViewJavascriptBridge/WebViewJavascriptBridge/WebViewJavascriptBridgeBase.h"
+#include "bridge/WebViewJavascriptBridge.h"
+#include "bridge/WebViewJavascriptBridgeBase.h"
 #include <TargetConditionals.h>
 #include <dlfcn.h>
 

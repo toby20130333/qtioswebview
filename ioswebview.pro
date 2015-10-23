@@ -3,26 +3,26 @@ QT += gui core widgets qml quick gui-private
 
 HEADERS += \
     ioswebview.h \
-    WebViewJavascriptBridge/WebViewJavascriptBridge/WebViewJavascriptBridge.h \
-    WebViewJavascriptBridge/WebViewJavascriptBridge/WebViewJavascriptBridgeBase.h
+    bridge/WebViewJavascriptBridge.h \
+    bridge/WebViewJavascriptBridgeBase.h
 
 OBJECTIVE_SOURCES += \
     ioswebview.mm \
-    WebViewJavascriptBridge/WebViewJavascriptBridge/WebViewJavascriptBridge.mm \
-    WebViewJavascriptBridge/WebViewJavascriptBridge/WebViewJavascriptBridgeBase.mm
+    bridge/WebViewJavascriptBridge.mm \
+    bridge/WebViewJavascriptBridgeBase.mm
 
 SOURCES += \
     main.cpp
 
 DISTFILES += \
     main.qml \
-    WebViewJavascriptBridge/WebViewJavascriptBridge/WebViewJavascriptBridge.js.txt
+    bridge/WebViewJavascriptBridge.js.txt
 #WEBVIEW_RESOURCE.files +=\
 #   $$PWD/WebViewJavascriptBridge/WebViewJavascriptBridge/WebViewJavascriptBridge.js.txt \
 #   $$PWD/test.html
 
 WEBVIEW_RESOURCE.files +=\
-   $$PWD/WebViewJavascriptBridge/WebViewJavascriptBridge/WebViewJavascriptBridge.js.txt \
+   $$PWD/bridge/WebViewJavascriptBridge.js.txt \
    $$PWD/canvasjs-1.8.0-beta/bdcharts.html \
   $$PWD/canvasjs-1.8.0-beta/canvasjs.min.js\
   $$PWD/canvasjs-1.8.0-beta/jquery.canvasjs.min.js \
